@@ -7,146 +7,304 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f5f5f5;color:#222}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f4f4;color:#111}
 
-/* HEADER */
-header{background:#ff6000;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px}
-.logo{font-size:24px;font-weight:bold}
-.search{flex:1;padding:10px;border:none;border-radius:6px}
-.cart-btn{background:#fff;color:#ff6000;border:none;padding:10px 14px;border-radius:6px;font-weight:bold;cursor:pointer}
+.header{
+  background:white;
+  border-bottom:1px solid #ddd;
+}
+.header-top{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:10px 20px;
+}
+.logo{
+  color:#ff6000;
+  font-size:30px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.search{
+  flex:1;
+  height:44px;
+  border:2px solid #ff6000;
+  border-radius:7px;
+  padding:0 14px;
+  font-size:14px;
+}
+.cart-btn{
+  background:#ff6000;
+  color:white;
+  border:0;
+  border-radius:7px;
+  padding:14px 22px;
+  font-weight:bold;
+}
 
-/* NAV */
-nav{background:#fff;border-bottom:1px solid #ddd;padding:10px 20px;display:flex;gap:20px;font-weight:bold}
-nav span{cursor:pointer}
-nav span:hover{color:#ff6000}
-.badge{background:red;color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;margin-left:4px}
+.nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  gap:24px;
+  padding:10px 20px 14px;
+  font-weight:bold;
+  font-size:14px;
+}
+.nav span{cursor:pointer}
+.nav span:hover{color:#ff6000}
+.badge{
+  background:red;
+  color:white;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:10px;
+}
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:20px}
+.page{
+  max-width:1200px;
+  margin:24px auto;
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:20px;
+  padding:0 20px;
+}
 
-/* SIDEBAR */
-.sidebar{background:#fff;padding:15px;border-radius:10px}
-.sidebar h3{margin-top:0}
-.sidebar p{padding:8px;border-radius:6px;cursor:pointer}
-.sidebar p:hover{background:#ffe9dc;color:#ff6000}
+.sidebar{
+  background:white;
+  border-radius:12px;
+  padding:16px;
+  height:390px;
+}
+.sidebar h3{margin-top:0;font-size:22px}
+.cat{
+  padding:14px;
+  border-radius:8px;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+}
+.cat.active,.cat:hover{
+  background:#fff1e8;
+  color:#ff6000;
+}
 
-/* HERO */
-.hero{background:#ff7a1a;color:#fff;padding:20px;border-radius:12px;margin-bottom:20px}
-.hero h2{margin:0}
-.hero p{margin:6px 0 0}
+.hero{
+  background:linear-gradient(90deg,#ff6000,#ff9330);
+  color:white;
+  border-radius:12px;
+  padding:26px;
+  margin-bottom:20px;
+}
+.hero h1{margin:0;font-size:32px}
+.hero p{margin-bottom:0}
 
-/* PRODUCTS */
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 4px 10px rgba(0,0,0,0.08);position:relative}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:10px}
-.tag{position:absolute;top:10px;left:10px;background:#ff6000;color:#fff;font-size:12px;padding:4px 6px;border-radius:6px}
-.seller{font-size:12px;color:#666}
-.rating{font-size:12px;color:#f5a400}
-.shipping{font-size:12px;color:green}
-.price{color:#ff6000;font-size:20px;font-weight:bold;margin:6px 0}
-.add{width:100%;background:#ff6000;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer}
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.card{
+  background:white;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  position:relative;
+}
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:9px;
+}
+.tag{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#ff6000;
+  color:white;
+  border-radius:6px;
+  padding:5px 8px;
+  font-size:12px;
+  font-weight:bold;
+}
+.card h3{font-size:17px;min-height:42px}
+.seller{color:#666;font-size:13px}
+.rating{color:#f5a400;font-size:13px}
+.shipping{color:green;font-size:13px;font-weight:bold}
+.price{color:#ff6000;font-size:24px;font-weight:bold;margin:8px 0}
+.add{
+  width:100%;
+  background:#ff6000;
+  color:white;
+  border:0;
+  border-radius:7px;
+  padding:11px;
+  font-weight:bold;
+}
 
-/* CHAT */
-.chat{position:fixed;right:20px;bottom:20px;width:260px;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2)}
-.chat-header{background:#ff6000;color:#fff;padding:10px;font-weight:bold;border-radius:10px 10px 0 0}
-.chat-body{padding:10px;font-size:13px;height:150px}
+.chat{
+  position:fixed;
+  right:26px;
+  bottom:78px;
+  width:290px;
+  background:white;
+  border-radius:13px;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.chat-head{
+  background:#ff6000;
+  color:white;
+  padding:14px;
+  font-weight:bold;
+}
+.chat-body{
+  height:190px;
+  padding:12px;
+  font-size:14px;
+}
+.msg{
+  background:#f2f2f2;
+  padding:10px;
+  border-radius:8px;
+}
+.chat-input{
+  display:flex;
+  border-top:1px solid #ddd;
+}
+.chat-input input{
+  flex:1;
+  border:0;
+  padding:13px;
+}
+.chat-input button{
+  background:#ff6000;
+  color:white;
+  border:0;
+  padding:13px;
+}
+.chat-btn{
+  position:fixed;
+  right:26px;
+  bottom:22px;
+  background:#ff6000;
+  color:white;
+  border:0;
+  border-radius:30px;
+  padding:15px 22px;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .page{grid-template-columns:1fr}
+  .products{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">Furkan Ytskn Store 🛒</div>
-<input class="search" placeholder="Ürün, kategori veya satıcı ara..." onkeyup="searchProducts()" id="search">
-<button class="cart-btn">Sepetim</button>
-</header>
+<div class="header">
+  <div class="header-top">
+    <div class="logo">Furkan Ytskn Store</div>
+    <input class="search" id="search" placeholder="Ürün, kategori veya satıcı ara..." onkeyup="searchProducts()">
+    <button class="cart-btn">Sepetim 🛒</button>
+  </div>
 
-<nav>
-<span>☰ Kategoriler <b class="badge">Yeni</b></span>
-<span>Giyim</span>
-<span>Elektronik</span>
-<span>Kozmetik</span>
-<span>Süpermarket</span>
-<span onclick="showFlash()">Flaş Ürünler <b class="badge">Yeni</b></span>
-<span onclick="showBest()">Çok Satanlar <b class="badge">Yeni</b></span>
-</nav>
-
-<div class="layout">
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-<h3>Kategoriler</h3>
-<p onclick="filterCat('all')">Tüm Ürünler</p>
-<p onclick="filterCat('Elektronik')">Elektronik</p>
-<p onclick="filterCat('Giyim')">Giyim</p>
-<p onclick="filterCat('Ayakkabı')">Ayakkabı</p>
+  <div class="nav">
+    <span>☰ Kategoriler <b class="badge">Yeni</b></span>
+    <span onclick="filterCat('Giyim')">Giyim</span>
+    <span onclick="filterCat('Elektronik')">Elektronik</span>
+    <span onclick="filterCat('Kozmetik')">Kozmetik</span>
+    <span onclick="filterCat('Süpermarket')">Süpermarket</span>
+    <span onclick="showFlash()">Flaş Ürünler <b class="badge">Yeni</b></span>
+    <span onclick="showBest()">Çok Satanlar <b class="badge">Yeni</b></span>
+  </div>
 </div>
 
-<!-- CONTENT -->
-<div>
-<div class="hero">
-<h2>Furkan Ytskn Store Fırsatları</h2>
-<p>500 TL ve üzeri ücretsiz kargo, özel satıcı kuponları ve flaş ürünler seni bekliyor.</p>
+<div class="page">
+  <aside class="sidebar">
+    <h3>Kategoriler</h3>
+    <div class="cat active" onclick="filterCat('all')">Tüm Ürünler <span>›</span></div>
+    <div class="cat" onclick="filterCat('Elektronik')">Elektronik <span>›</span></div>
+    <div class="cat" onclick="filterCat('Giyim')">Giyim <span>›</span></div>
+    <div class="cat" onclick="filterCat('Ayakkabı & Çanta')">Ayakkabı & Çanta <span>›</span></div>
+    <div class="cat" onclick="filterCat('Kozmetik')">Kozmetik <span>›</span></div>
+    <div class="cat" onclick="filterCat('Süpermarket')">Süpermarket <span>›</span></div>
+    <div class="cat" onclick="filterCat('Spor & Outdoor')">Spor & Outdoor <span>›</span></div>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <h1>Furkan Ytskn Store Fırsatları</h1>
+      <p>500 TL ve üzeri ücretsiz kargo, özel satıcı kuponları ve flaş ürünler seni bekliyor.</p>
+    </div>
+
+    <div class="products" id="products"></div>
+  </main>
 </div>
 
-<div class="products" id="products"></div>
-</div>
-
-</div>
-
-<!-- CHAT -->
 <div class="chat">
-<div class="chat-header">Canlı Asistan</div>
-<div class="chat-body">Merhaba 👋 yardımcı olabilirim</div>
+  <div class="chat-head">Canlı Asistan</div>
+  <div class="chat-body">
+    <div class="msg">Merhaba 👋 Sipariş, kargo ve indirim kodları hakkında yardımcı olabilirim.</div>
+  </div>
+  <div class="chat-input">
+    <input placeholder="Mesaj yaz...">
+    <button>Gönder</button>
+  </div>
 </div>
+<button class="chat-btn">Canlı Asistan 💬</button>
 
 <script>
-
 const products=[
-{name:"iPhone 15",price:46999,cat:"Elektronik",seller:"TechStore",rating:4.8,flash:true,best:true,img:"https://picsum.photos/200?1"},
-{name:"Kulaklık",price:650,cat:"Elektronik",seller:"SoundMax",rating:4.5,flash:true,best:false,img:"https://picsum.photos/200?2"},
-{name:"Tişört",price:180,cat:"Giyim",seller:"ModaTR",rating:4.3,flash:false,best:true,img:"https://picsum.photos/200?3"},
-{name:"Ayakkabı",price:899,cat:"Ayakkabı",seller:"SportX",rating:4.7,flash:true,best:true,img:"https://picsum.photos/200?4"}
+{name:"Apple iPhone 15 128 GB",price:46999,cat:"Elektronik",seller:"TechStore",rating:4.8,flash:true,best:true,img:"https://picsum.photos/seed/iphone/400/300"},
+{name:"Kablosuz Bluetooth Kulaklık",price:650,cat:"Elektronik",seller:"SoundMax",rating:4.5,flash:true,best:false,img:"https://picsum.photos/seed/headphone/400/300"},
+{name:"Erkek Basic Tişört",price:180,cat:"Giyim",seller:"ModaTR",rating:4.3,flash:false,best:true,img:"https://picsum.photos/seed/tshirt/400/300"},
+{name:"Sneaker Günlük Ayakkabı",price:899,cat:"Ayakkabı & Çanta",seller:"SportX",rating:4.7,flash:true,best:true,img:"https://picsum.photos/seed/sneaker/400/300"},
+{name:"Sırt Çantası",price:420,cat:"Ayakkabı & Çanta",seller:"BagWorld",rating:4.2,flash:false,best:false,img:"https://picsum.photos/seed/bag/400/300"},
+{name:"Cilt Bakım Seti",price:350,cat:"Kozmetik",seller:"BeautyShop",rating:4.4,flash:false,best:true,img:"https://picsum.photos/seed/skincare/400/300"},
+{name:"Filtre Kahve 500g",price:220,cat:"Süpermarket",seller:"MarketPlus",rating:4.6,flash:true,best:false,img:"https://picsum.photos/seed/coffee/400/300"},
+{name:"Spor Eşofman Takımı",price:740,cat:"Spor & Outdoor",seller:"FitWear",rating:4.1,flash:false,best:true,img:"https://picsum.photos/seed/sport/400/300"}
 ];
 
 function render(list=products){
-let html="";
-list.forEach(p=>{
-html+=`
-<div class="card">
-${p.flash?'<div class="tag">Flaş Ürün</div>':''}
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p class="seller">Satıcı: ${p.seller}</p>
-<p class="rating">⭐ ${p.rating}</p>
-<p class="shipping">${p.price>=500?"Ücretsiz Kargo":"500 TL üzeri ücretsiz kargo"}</p>
-<p class="price">${p.price} TL</p>
-<button class="add">Sepete Ekle</button>
-</div>`;
-});
-document.getElementById("products").innerHTML=html;
+  document.getElementById("products").innerHTML=list.map(p=>`
+    <div class="card">
+      ${p.flash?'<div class="tag">Flaş Ürün</div>':''}
+      <img src="${p.img}">
+      <h3>${p.name}</h3>
+      <p class="seller">Satıcı: ${p.seller}</p>
+      <p class="rating">⭐ ${p.rating} | Çok hızlı teslimat</p>
+      <p class="shipping">${p.price>=500?'Ücretsiz Kargo':'500 TL üzeri ücretsiz kargo'}</p>
+      <p class="price">${p.price.toLocaleString("tr-TR")} TL</p>
+      <button class="add">Sepete Ekle</button>
+    </div>
+  `).join("");
 }
 
 function filterCat(cat){
-if(cat==="all")return render();
-render(products.filter(p=>p.cat===cat));
+  if(cat==="all"){render(products);return;}
+  render(products.filter(p=>p.cat===cat));
 }
 
 function searchProducts(){
-let v=document.getElementById("search").value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
+  const val=document.getElementById("search").value.toLowerCase();
+  render(products.filter(p=>
+    p.name.toLowerCase().includes(val) ||
+    p.cat.toLowerCase().includes(val) ||
+    p.seller.toLowerCase().includes(val)
+  ));
 }
 
-function showFlash(){
-render(products.filter(p=>p.flash));
-}
-
-function showBest(){
-render(products.filter(p=>p.best));
-}
+function showFlash(){render(products.filter(p=>p.flash))}
+function showBest(){render(products.filter(p=>p.best))}
 
 render();
-
 </script>
 
 </body>
