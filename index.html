@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-Commerce</title>
+</head>
+<body>
+
+<h1>Mini Shop 🛒</h1>
+
+<div id="products"></div>
+
+<h2>Cart</h2>
+<ul id="cart"></ul>
+<p>Total: <span id="total">0</span> TL</p>
+
+<script>
+const products = [
+  {name: "Shoes", price: 300},
+  {name: "T-shirt", price: 150},
+  {name: "Hat", price: 100}
+];
+
+let cart = [];
+
+function renderProducts() {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+  products.forEach((p, i) => {
+    container.innerHTML += `
+      <p>${p.name} - ${p.price} TL 
+      <button onclick="addToCart(${i})">Add</button></p>
+    `;
+  });
+}
+
+function addToCart(i) {
+  cart.push(products[i]);
+  renderCart();
+}
+
+function renderCart() {
+  const list = document.getElementById("cart");
+  list.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item) => {
+    total += item.price;
+    list.innerHTML += `<li>${item.name} - ${item.price} TL</li>`;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+renderProducts();
+</script>
+
+</body>
+</html>
