@@ -1,159 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Smart E-Commerce Platform</title>
+  <title>N11 Style Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #f5f5f5;
+    }
+
+    /* HEADER */
+    header {
+      background: #ff6000;
+      padding: 15px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    input {
+      padding: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    /* PRODUCTS */
+    .container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .price {
+      color: #ff6000;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    button {
+      background: #ff6000;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #e65100;
+    }
+
+    /* CART */
+    .cart {
+      background: white;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+
+  </style>
 </head>
 <body>
 
-<h1>Smart Shop 🛒</h1>
+<header>
+  <h1>Mini N11 🛒</h1>
+  <input placeholder="Ürün ara..." onkeyup="searchProducts()" id="search">
+</header>
 
-<input id="searchInput" placeholder="Search product..." onkeyup="searchProducts()">
+<div class="container" id="products"></div>
 
-<h2>Products</h2>
-<div id="products"></div>
-
-<h2>Cart</h2>
-<ul id="cart"></ul>
-
-<p>Subtotal: <span id="subtotal">0</span> TL</p>
-<p>Shipping: <span id="shipping">0</span> TL</p>
-<p>Discount: <span id="discount">0</span> TL</p>
-<h3>Total: <span id="total">0</span> TL</h3>
-
-<input id="coupon" placeholder="Coupon code">
-<button onclick="applyCoupon()">Apply Coupon</button>
-
-<h2>Shipment Tracking 📦</h2>
-<input id="trackingCode" placeholder="Enter tracking code">
-<button onclick="trackShipment()">Track</button>
-<p id="trackingResult"></p>
-
-<h2>Weekly Discount Wheel 🎡</h2>
-<button onclick="spinWheel()">Spin Wheel</button>
-<p id="wheelResult"></p>
+<div class="cart">
+  <h2>Sepet</h2>
+  <ul id="cart"></ul>
+  <p>Toplam: <span id="total">0</span> TL</p>
+</div>
 
 <script>
+
 const products = [
-  { name: "Sneakers", price: 350, seller: "SportX" },
-  { name: "T-Shirt", price: 180, seller: "ModaTR" },
-  { name: "Headphones", price: 650, seller: "TechStore" },
-  { name: "Backpack", price: 420, seller: "BagWorld" }
+  {name: "Sneakers", price: 350},
+  {name: "T-Shirt", price: 180},
+  {name: "Kulaklık", price: 650},
+  {name: "Çanta", price: 420}
 ];
 
 let cart = [];
-let discount = 0;
 
 function renderProducts(list = products) {
   const container = document.getElementById("products");
   container.innerHTML = "";
 
-  list.forEach((product, index) => {
+  list.forEach((p, i) => {
     container.innerHTML += `
-      <div>
-        <h3>${product.name}</h3>
-        <p>Seller: ${product.seller}</p>
-        <p>Price: ${product.price} TL</p>
-        <button onclick="addToCart(${index})">Add to Cart</button>
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p class="price">${p.price} TL</p>
+        <button onclick="addToCart(${i})">Sepete Ekle</button>
       </div>
-      <hr>
     `;
   });
 }
 
-function addToCart(index) {
-  cart.push(products[index]);
-  renderCart();
-}
-
-function removeFromCart(index) {
-  cart.splice(index, 1);
+function addToCart(i) {
+  cart.push(products[i]);
   renderCart();
 }
 
 function renderCart() {
-  const cartList = document.getElementById("cart");
-  cartList.innerHTML = "";
+  let total = 0;
+  const list = document.getElementById("cart");
+  list.innerHTML = "";
 
-  let subtotal = 0;
-
-  cart.forEach((item, index) => {
-    subtotal += item.price;
-    cartList.innerHTML += `
-      <li>
-        ${item.name} - ${item.price} TL
-        <button onclick="removeFromCart(${index})">Remove</button>
-      </li>
-    `;
+  cart.forEach((item) => {
+    total += item.price;
+    list.innerHTML += `<li>${item.name} - ${item.price} TL</li>`;
   });
 
-  const shipping = subtotal >= 500 || subtotal === 0 ? 0 : 49;
-  const total = subtotal + shipping - discount;
-
-  document.getElementById("subtotal").innerText = subtotal;
-  document.getElementById("shipping").innerText =
-    shipping === 0 ? "Free" : shipping;
-  document.getElementById("discount").innerText = discount;
-  document.getElementById("total").innerText = total < 0 ? 0 : total;
-}
-
-function applyCoupon() {
-  const code = document.getElementById("coupon").value.toUpperCase();
-
-  if (code === "SPORTX10") {
-    discount = 50;
-    alert("SportX seller coupon applied!");
-  } else if (code === "TECH100") {
-    discount = 100;
-    alert("TechStore seller coupon applied!");
-  } else if (code === "WELCOME20") {
-    discount = 20;
-    alert("Welcome coupon applied!");
-  } else {
-    discount = 0;
-    alert("Invalid coupon code!");
-  }
-
-  renderCart();
+  document.getElementById("total").innerText = total;
 }
 
 function searchProducts() {
-  const searchText = document.getElementById("searchInput").value.toLowerCase();
+  const value = document.getElementById("search").value.toLowerCase();
 
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchText) ||
-    product.seller.toLowerCase().includes(searchText)
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value)
   );
 
-  renderProducts(filteredProducts);
-}
-
-function trackShipment() {
-  const code = document.getElementById("trackingCode").value;
-
-  if (code.length >= 5) {
-    document.getElementById("trackingResult").innerText =
-      "Your shipment is on the way. Estimated delivery: 2 days.";
-  } else {
-    document.getElementById("trackingResult").innerText =
-      "Please enter a valid tracking code.";
-  }
-}
-
-function spinWheel() {
-  const rewards = [
-    "10 TL discount",
-    "Free shipping",
-    "50 TL discount",
-    "No reward this week",
-    "100 TL discount"
-  ];
-
-  const randomReward = rewards[Math.floor(Math.random() * rewards.length)];
-  document.getElementById("wheelResult").innerText = randomReward;
+  renderProducts(filtered);
 }
 
 renderProducts();
-renderCart();
+
 </script>
 
 </body>
