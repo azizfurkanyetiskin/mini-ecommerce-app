@@ -6,20 +6,50 @@
 <title>Furkan Ytskn Store</title>
 
 <style>
-body {margin:0;font-family:Arial;background:#f5f5f5;}
-header {background:#ff6000;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;}
-.logo {font-size:24px;font-weight:bold;}
-.search {padding:10px;width:50%;border:none;border-radius:6px;}
-.container {display:grid;grid-template-columns:220px 1fr;gap:20px;padding:20px;}
-.sidebar {background:white;padding:15px;border-radius:10px;}
-.products {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
-.card {background:white;padding:15px;border-radius:10px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-.card img {width:100%;border-radius:10px;}
-.price {color:#ff6000;font-size:20px;font-weight:bold;}
-button {background:#ff6000;color:white;border:none;padding:10px;border-radius:6px;margin-top:10px;}
-.chat {position:fixed;right:20px;bottom:20px;background:white;width:250px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
-.chat-header {background:#ff6000;color:white;padding:10px;}
-.chat-body {padding:10px;height:150px;overflow:auto;}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f5f5f5;color:#222}
+
+/* HEADER */
+header{background:#ff6000;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.logo{font-size:24px;font-weight:bold}
+.search{flex:1;padding:10px;border:none;border-radius:6px}
+.cart-btn{background:#fff;color:#ff6000;border:none;padding:10px 14px;border-radius:6px;font-weight:bold;cursor:pointer}
+
+/* NAV */
+nav{background:#fff;border-bottom:1px solid #ddd;padding:10px 20px;display:flex;gap:20px;font-weight:bold}
+nav span{cursor:pointer}
+nav span:hover{color:#ff6000}
+.badge{background:red;color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;margin-left:4px}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:20px}
+
+/* SIDEBAR */
+.sidebar{background:#fff;padding:15px;border-radius:10px}
+.sidebar h3{margin-top:0}
+.sidebar p{padding:8px;border-radius:6px;cursor:pointer}
+.sidebar p:hover{background:#ffe9dc;color:#ff6000}
+
+/* HERO */
+.hero{background:#ff7a1a;color:#fff;padding:20px;border-radius:12px;margin-bottom:20px}
+.hero h2{margin:0}
+.hero p{margin:6px 0 0}
+
+/* PRODUCTS */
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 4px 10px rgba(0,0,0,0.08);position:relative}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+.tag{position:absolute;top:10px;left:10px;background:#ff6000;color:#fff;font-size:12px;padding:4px 6px;border-radius:6px}
+.seller{font-size:12px;color:#666}
+.rating{font-size:12px;color:#f5a400}
+.shipping{font-size:12px;color:green}
+.price{color:#ff6000;font-size:20px;font-weight:bold;margin:6px 0}
+.add{width:100%;background:#ff6000;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer}
+
+/* CHAT */
+.chat{position:fixed;right:20px;bottom:20px;width:260px;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.2)}
+.chat-header{background:#ff6000;color:#fff;padding:10px;font-weight:bold;border-radius:10px 10px 0 0}
+.chat-body{padding:10px;font-size:13px;height:150px}
 </style>
 </head>
 
@@ -27,25 +57,44 @@ button {background:#ff6000;color:white;border:none;padding:10px;border-radius:6p
 
 <header>
 <div class="logo">Furkan Ytskn Store 🛒</div>
-<input class="search" placeholder="Ürün ara..." onkeyup="searchProducts()" id="search">
+<input class="search" placeholder="Ürün, kategori veya satıcı ara..." onkeyup="searchProducts()" id="search">
+<button class="cart-btn">Sepetim</button>
 </header>
 
-<div class="container">
+<nav>
+<span>☰ Kategoriler <b class="badge">Yeni</b></span>
+<span>Giyim</span>
+<span>Elektronik</span>
+<span>Kozmetik</span>
+<span>Süpermarket</span>
+<span onclick="showFlash()">Flaş Ürünler <b class="badge">Yeni</b></span>
+<span onclick="showBest()">Çok Satanlar <b class="badge">Yeni</b></span>
+</nav>
 
+<div class="layout">
+
+<!-- SIDEBAR -->
 <div class="sidebar">
 <h3>Kategoriler</h3>
-<p onclick="filter('all')">Tüm Ürünler</p>
-<p onclick="filter('Elektronik')">Elektronik</p>
-<p onclick="filter('Giyim')">Giyim</p>
+<p onclick="filterCat('all')">Tüm Ürünler</p>
+<p onclick="filterCat('Elektronik')">Elektronik</p>
+<p onclick="filterCat('Giyim')">Giyim</p>
+<p onclick="filterCat('Ayakkabı')">Ayakkabı</p>
 </div>
 
+<!-- CONTENT -->
 <div>
+<div class="hero">
 <h2>Furkan Ytskn Store Fırsatları</h2>
+<p>500 TL ve üzeri ücretsiz kargo, özel satıcı kuponları ve flaş ürünler seni bekliyor.</p>
+</div>
+
 <div class="products" id="products"></div>
 </div>
 
 </div>
 
+<!-- CHAT -->
 <div class="chat">
 <div class="chat-header">Canlı Asistan</div>
 <div class="chat-body">Merhaba 👋 yardımcı olabilirim</div>
@@ -53,11 +102,11 @@ button {background:#ff6000;color:white;border:none;padding:10px;border-radius:6p
 
 <script>
 
-const products = [
-{name:"iPhone 15",price:46999,cat:"Elektronik",img:"https://picsum.photos/200?1"},
-{name:"Kulaklık",price:650,cat:"Elektronik",img:"https://picsum.photos/200?2"},
-{name:"Tişört",price:180,cat:"Giyim",img:"https://picsum.photos/200?3"},
-{name:"Ayakkabı",price:899,cat:"Giyim",img:"https://picsum.photos/200?4"}
+const products=[
+{name:"iPhone 15",price:46999,cat:"Elektronik",seller:"TechStore",rating:4.8,flash:true,best:true,img:"https://picsum.photos/200?1"},
+{name:"Kulaklık",price:650,cat:"Elektronik",seller:"SoundMax",rating:4.5,flash:true,best:false,img:"https://picsum.photos/200?2"},
+{name:"Tişört",price:180,cat:"Giyim",seller:"ModaTR",rating:4.3,flash:false,best:true,img:"https://picsum.photos/200?3"},
+{name:"Ayakkabı",price:899,cat:"Ayakkabı",seller:"SportX",rating:4.7,flash:true,best:true,img:"https://picsum.photos/200?4"}
 ];
 
 function render(list=products){
@@ -65,23 +114,35 @@ let html="";
 list.forEach(p=>{
 html+=`
 <div class="card">
+${p.flash?'<div class="tag">Flaş Ürün</div>':''}
 <img src="${p.img}">
 <h3>${p.name}</h3>
+<p class="seller">Satıcı: ${p.seller}</p>
+<p class="rating">⭐ ${p.rating}</p>
+<p class="shipping">${p.price>=500?"Ücretsiz Kargo":"500 TL üzeri ücretsiz kargo"}</p>
 <p class="price">${p.price} TL</p>
-<button>Sepete Ekle</button>
+<button class="add">Sepete Ekle</button>
 </div>`;
 });
 document.getElementById("products").innerHTML=html;
 }
 
-function filter(cat){
-if(cat==="all") return render();
+function filterCat(cat){
+if(cat==="all")return render();
 render(products.filter(p=>p.cat===cat));
 }
 
 function searchProducts(){
-let val=document.getElementById("search").value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(val)));
+let v=document.getElementById("search").value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+}
+
+function showFlash(){
+render(products.filter(p=>p.flash));
+}
+
+function showBest(){
+render(products.filter(p=>p.best));
 }
 
 render();
