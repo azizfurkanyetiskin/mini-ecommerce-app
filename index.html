@@ -1,57 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>E-Commerce</title>
+  <title>Smart E-Commerce Platform</title>
 </head>
 <body>
 
-<h1>Mini Shop 🛒</h1>
+<h1>Smart Shop 🛒</h1>
 
+<input id="searchInput" placeholder="Search product..." onkeyup="searchProducts()">
+
+<h2>Products</h2>
 <div id="products"></div>
 
 <h2>Cart</h2>
 <ul id="cart"></ul>
-<p>Total: <span id="total">0</span> TL</p>
+
+<p>Subtotal: <span id="subtotal">0</span> TL</p>
+<p>Shipping: <span id="shipping">0</span> TL</p>
+<p>Discount: <span id="discount">0</span> TL</p>
+<h3>Total: <span id="total">0</span> TL</h3>
+
+<input id="coupon" placeholder="Coupon code">
+<button onclick="applyCoupon()">Apply Coupon</button>
+
+<h2>Shipment Tracking 📦</h2>
+<input id="trackingCode" placeholder="Enter tracking code">
+<button onclick="trackShipment()">Track</button>
+<p id="trackingResult"></p>
+
+<h2>Weekly Discount Wheel 🎡</h2>
+<button onclick="spinWheel()">Spin Wheel</button>
+<p id="wheelResult"></p>
 
 <script>
 const products = [
-  {name: "Shoes", price: 300},
-  {name: "T-shirt", price: 150},
-  {name: "Hat", price: 100}
+  { name: "Sneakers", price: 350, seller: "SportX" },
+  { name: "T-Shirt", price: 180, seller: "ModaTR" },
+  { name: "Headphones", price: 650, seller: "TechStore" },
+  { name: "Backpack", price: 420, seller: "BagWorld" }
 ];
 
 let cart = [];
+let discount = 0;
 
-function renderProducts() {
+function renderProducts(list = products) {
   const container = document.getElementById("products");
   container.innerHTML = "";
-  products.forEach((p, i) => {
+
+  list.forEach((product, index) => {
     container.innerHTML += `
-      <p>${p.name} - ${p.price} TL 
-      <button onclick="addToCart(${i})">Add</button></p>
+      <div>
+        <h3>${product.name}</h3>
+        <p>Seller: ${product.seller}</p>
+        <p>Price: ${product.price} TL</p>
+        <button onclick="addToCart(${index})">Add to Cart</button>
+      </div>
+      <hr>
     `;
   });
 }
 
-function addToCart(i) {
-  cart.push(products[i]);
+function addToCart(index) {
+  cart.push(products[index]);
+  renderCart();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
   renderCart();
 }
 
 function renderCart() {
-  const list = document.getElementById("cart");
-  list.innerHTML = "";
-  let total = 0;
+  const cartList = document.getElementById("cart");
+  cartList.innerHTML = "";
 
-  cart.forEach((item) => {
-    total += item.price;
-    list.innerHTML += `<li>${item.name} - ${item.price} TL</li>`;
+  let subtotal = 0;
+
+  cart.forEach((item, index) => {
+    subtotal += item.price;
+    cartList.innerHTML += `
+      <li>
+        ${item.name} - ${item.price} TL
+        <button onclick="removeFromCart(${index})">Remove</button>
+      </li>
+    `;
   });
 
-  document.getElementById("total").innerText = total;
+  const shipping = subtotal >= 500 || subtotal === 0 ? 0 : 49;
+  const total = subtotal + shipping - discount;
+
+  document.getElementById("subtotal").innerText = subtotal;
+  document.getElementById("shipping").innerText =
+    shipping === 0 ? "Free" : shipping;
+  document.getElementById("discount").innerText = discount;
+  document.getElementById("total").innerText = total < 0 ? 0 : total;
+}
+
+function applyCoupon() {
+  const code = document.getElementById("coupon").value.toUpperCase();
+
+  if (code === "SPORTX10") {
+    discount = 50;
+    alert("SportX seller coupon applied!");
+  } else if (code === "TECH100") {
+    discount = 100;
+    alert("TechStore seller coupon applied!");
+  } else if (code === "WELCOME20") {
+    discount = 20;
+    alert("Welcome coupon applied!");
+  } else {
+    discount = 0;
+    alert("Invalid coupon code!");
+  }
+
+  renderCart();
+}
+
+function searchProducts() {
+  const searchText = document.getElementById("searchInput").value.toLowerCase();
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchText) ||
+    product.seller.toLowerCase().includes(searchText)
+  );
+
+  renderProducts(filteredProducts);
+}
+
+function trackShipment() {
+  const code = document.getElementById("trackingCode").value;
+
+  if (code.length >= 5) {
+    document.getElementById("trackingResult").innerText =
+      "Your shipment is on the way. Estimated delivery: 2 days.";
+  } else {
+    document.getElementById("trackingResult").innerText =
+      "Please enter a valid tracking code.";
+  }
+}
+
+function spinWheel() {
+  const rewards = [
+    "10 TL discount",
+    "Free shipping",
+    "50 TL discount",
+    "No reward this week",
+    "100 TL discount"
+  ];
+
+  const randomReward = rewards[Math.floor(Math.random() * rewards.length)];
+  document.getElementById("wheelResult").innerText = randomReward;
 }
 
 renderProducts();
+renderCart();
 </script>
 
 </body>
