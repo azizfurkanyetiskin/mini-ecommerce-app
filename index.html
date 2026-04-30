@@ -1,311 +1,82 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Furkan Ytskn Store</title>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f4f4;color:#111}
-
-.header{
-  background:white;
-  border-bottom:1px solid #ddd;
-}
-.header-top{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:10px 20px;
-}
-.logo{
-  color:#ff6000;
-  font-size:30px;
-  font-weight:800;
-  white-space:nowrap;
-}
-.search{
-  flex:1;
-  height:44px;
-  border:2px solid #ff6000;
-  border-radius:7px;
-  padding:0 14px;
-  font-size:14px;
-}
-.cart-btn{
-  background:#ff6000;
-  color:white;
-  border:0;
-  border-radius:7px;
-  padding:14px 22px;
-  font-weight:bold;
-}
-
-.nav{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  gap:24px;
-  padding:10px 20px 14px;
-  font-weight:bold;
-  font-size:14px;
-}
-.nav span{cursor:pointer}
-.nav span:hover{color:#ff6000}
-.badge{
-  background:red;
-  color:white;
-  font-size:11px;
-  padding:2px 6px;
-  border-radius:10px;
-}
-
-.page{
-  max-width:1200px;
-  margin:24px auto;
-  display:grid;
-  grid-template-columns:220px 1fr;
-  gap:20px;
-  padding:0 20px;
-}
-
-.sidebar{
-  background:white;
-  border-radius:12px;
-  padding:16px;
-  height:390px;
-}
-.sidebar h3{margin-top:0;font-size:22px}
-.cat{
-  padding:14px;
-  border-radius:8px;
-  font-weight:bold;
-  display:flex;
-  justify-content:space-between;
-  cursor:pointer;
-}
-.cat.active,.cat:hover{
-  background:#fff1e8;
-  color:#ff6000;
-}
-
-.hero{
-  background:linear-gradient(90deg,#ff6000,#ff9330);
-  color:white;
-  border-radius:12px;
-  padding:26px;
-  margin-bottom:20px;
-}
-.hero h1{margin:0;font-size:32px}
-.hero p{margin-bottom:0}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-.card{
-  background:white;
-  border-radius:12px;
-  padding:14px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-  position:relative;
-}
-.card img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:9px;
-}
-.tag{
-  position:absolute;
-  top:12px;
-  left:12px;
-  background:#ff6000;
-  color:white;
-  border-radius:6px;
-  padding:5px 8px;
-  font-size:12px;
-  font-weight:bold;
-}
-.card h3{font-size:17px;min-height:42px}
-.seller{color:#666;font-size:13px}
-.rating{color:#f5a400;font-size:13px}
-.shipping{color:green;font-size:13px;font-weight:bold}
-.price{color:#ff6000;font-size:24px;font-weight:bold;margin:8px 0}
-.add{
-  width:100%;
-  background:#ff6000;
-  color:white;
-  border:0;
-  border-radius:7px;
-  padding:11px;
-  font-weight:bold;
-}
-
-.chat{
-  position:fixed;
-  right:26px;
-  bottom:78px;
-  width:290px;
-  background:white;
-  border-radius:13px;
-  box-shadow:0 8px 30px rgba(0,0,0,.25);
-  overflow:hidden;
-}
-.chat-head{
-  background:#ff6000;
-  color:white;
-  padding:14px;
-  font-weight:bold;
-}
-.chat-body{
-  height:190px;
-  padding:12px;
-  font-size:14px;
-}
-.msg{
-  background:#f2f2f2;
-  padding:10px;
-  border-radius:8px;
-}
-.chat-input{
-  display:flex;
-  border-top:1px solid #ddd;
-}
-.chat-input input{
-  flex:1;
-  border:0;
-  padding:13px;
-}
-.chat-input button{
-  background:#ff6000;
-  color:white;
-  border:0;
-  padding:13px;
-}
-.chat-btn{
-  position:fixed;
-  right:26px;
-  bottom:22px;
-  background:#ff6000;
-  color:white;
-  border:0;
-  border-radius:30px;
-  padding:15px 22px;
-  font-weight:bold;
-}
-
-@media(max-width:900px){
-  .page{grid-template-columns:1fr}
-  .products{grid-template-columns:repeat(2,1fr)}
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-  <div class="header-top">
-    <div class="logo">Furkan Ytskn Store</div>
-    <input class="search" id="search" placeholder="Ürün, kategori veya satıcı ara..." onkeyup="searchProducts()">
-    <button class="cart-btn">Sepetim 🛒</button>
-  </div>
-
-  <div class="nav">
-    <span>☰ Kategoriler <b class="badge">Yeni</b></span>
-    <span onclick="filterCat('Giyim')">Giyim</span>
-    <span onclick="filterCat('Elektronik')">Elektronik</span>
-    <span onclick="filterCat('Kozmetik')">Kozmetik</span>
-    <span onclick="filterCat('Süpermarket')">Süpermarket</span>
-    <span onclick="showFlash()">Flaş Ürünler <b class="badge">Yeni</b></span>
-    <span onclick="showBest()">Çok Satanlar <b class="badge">Yeni</b></span>
-  </div>
-</div>
-
-<div class="page">
-  <aside class="sidebar">
-    <h3>Kategoriler</h3>
-    <div class="cat active" onclick="filterCat('all')">Tüm Ürünler <span>›</span></div>
-    <div class="cat" onclick="filterCat('Elektronik')">Elektronik <span>›</span></div>
-    <div class="cat" onclick="filterCat('Giyim')">Giyim <span>›</span></div>
-    <div class="cat" onclick="filterCat('Ayakkabı & Çanta')">Ayakkabı & Çanta <span>›</span></div>
-    <div class="cat" onclick="filterCat('Kozmetik')">Kozmetik <span>›</span></div>
-    <div class="cat" onclick="filterCat('Süpermarket')">Süpermarket <span>›</span></div>
-    <div class="cat" onclick="filterCat('Spor & Outdoor')">Spor & Outdoor <span>›</span></div>
-  </aside>
-
-  <main>
-    <div class="hero">
-      <h1>Furkan Ytskn Store Fırsatları</h1>
-      <p>500 TL ve üzeri ücretsiz kargo, özel satıcı kuponları ve flaş ürünler seni bekliyor.</p>
-    </div>
-
-    <div class="products" id="products"></div>
-  </main>
-</div>
-
-<div class="chat">
-  <div class="chat-head">Canlı Asistan</div>
-  <div class="chat-body">
-    <div class="msg">Merhaba 👋 Sipariş, kargo ve indirim kodları hakkında yardımcı olabilirim.</div>
-  </div>
-  <div class="chat-input">
-    <input placeholder="Mesaj yaz...">
-    <button>Gönder</button>
-  </div>
-</div>
-<button class="chat-btn">Canlı Asistan 💬</button>
-
-<script>
 const products=[
-{name:"Apple iPhone 15 128 GB",price:46999,cat:"Elektronik",seller:"TechStore",rating:4.8,flash:true,best:true,img:"https://picsum.photos/seed/iphone/400/300"},
-{name:"Kablosuz Bluetooth Kulaklık",price:650,cat:"Elektronik",seller:"SoundMax",rating:4.5,flash:true,best:false,img:"https://picsum.photos/seed/headphone/400/300"},
-{name:"Erkek Basic Tişört",price:180,cat:"Giyim",seller:"ModaTR",rating:4.3,flash:false,best:true,img:"https://picsum.photos/seed/tshirt/400/300"},
-{name:"Sneaker Günlük Ayakkabı",price:899,cat:"Ayakkabı & Çanta",seller:"SportX",rating:4.7,flash:true,best:true,img:"https://picsum.photos/seed/sneaker/400/300"},
-{name:"Sırt Çantası",price:420,cat:"Ayakkabı & Çanta",seller:"BagWorld",rating:4.2,flash:false,best:false,img:"https://picsum.photos/seed/bag/400/300"},
-{name:"Cilt Bakım Seti",price:350,cat:"Kozmetik",seller:"BeautyShop",rating:4.4,flash:false,best:true,img:"https://picsum.photos/seed/skincare/400/300"},
-{name:"Filtre Kahve 500g",price:220,cat:"Süpermarket",seller:"MarketPlus",rating:4.6,flash:true,best:false,img:"https://picsum.photos/seed/coffee/400/300"},
-{name:"Spor Eşofman Takımı",price:740,cat:"Spor & Outdoor",seller:"FitWear",rating:4.1,flash:false,best:true,img:"https://picsum.photos/seed/sport/400/300"}
+{
+name:"Apple iPhone 15 128 GB",
+price:46999,
+cat:"Elektronik",
+seller:"TechStore",
+rating:4.8,
+flash:true,
+best:true,
+img:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Kablosuz Bluetooth Kulaklık",
+price:650,
+cat:"Elektronik",
+seller:"SoundMax",
+rating:4.5,
+flash:true,
+best:false,
+img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Erkek Basic Tişört",
+price:180,
+cat:"Giyim",
+seller:"ModaTR",
+rating:4.3,
+flash:false,
+best:true,
+img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Sneaker Günlük Ayakkabı",
+price:899,
+cat:"Ayakkabı & Çanta",
+seller:"SportX",
+rating:4.7,
+flash:true,
+best:true,
+img:"https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Sırt Çantası",
+price:420,
+cat:"Ayakkabı & Çanta",
+seller:"BagWorld",
+rating:4.2,
+flash:false,
+best:false,
+img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Cilt Bakım Seti",
+price:350,
+cat:"Kozmetik",
+seller:"BeautyShop",
+rating:4.4,
+flash:false,
+best:true,
+img:"https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Filtre Kahve 500g",
+price:220,
+cat:"Süpermarket",
+seller:"MarketPlus",
+rating:4.6,
+flash:true,
+best:false,
+img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=400&q=80"
+},
+{
+name:"Spor Eşofman Takımı",
+price:740,
+cat:"Spor & Outdoor",
+seller:"FitWear",
+rating:4.1,
+flash:false,
+best:true,
+img:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80"
+}
 ];
-
-function render(list=products){
-  document.getElementById("products").innerHTML=list.map(p=>`
-    <div class="card">
-      ${p.flash?'<div class="tag">Flaş Ürün</div>':''}
-      <img src="${p.img}">
-      <h3>${p.name}</h3>
-      <p class="seller">Satıcı: ${p.seller}</p>
-      <p class="rating">⭐ ${p.rating} | Çok hızlı teslimat</p>
-      <p class="shipping">${p.price>=500?'Ücretsiz Kargo':'500 TL üzeri ücretsiz kargo'}</p>
-      <p class="price">${p.price.toLocaleString("tr-TR")} TL</p>
-      <button class="add">Sepete Ekle</button>
-    </div>
-  `).join("");
-}
-
-function filterCat(cat){
-  if(cat==="all"){render(products);return;}
-  render(products.filter(p=>p.cat===cat));
-}
-
-function searchProducts(){
-  const val=document.getElementById("search").value.toLowerCase();
-  render(products.filter(p=>
-    p.name.toLowerCase().includes(val) ||
-    p.cat.toLowerCase().includes(val) ||
-    p.seller.toLowerCase().includes(val)
-  ));
-}
-
-function showFlash(){render(products.filter(p=>p.flash))}
-function showBest(){render(products.filter(p=>p.best))}
-
-render();
-</script>
-
-</body>
-</html>
